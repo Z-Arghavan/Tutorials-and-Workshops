@@ -30,6 +30,7 @@ Some tools that we will use are listed below. Participants can install them or c
 
 
 ## Run the Demo neuro-symbolic code in Google Colab
+https://colab.research.google.com/
 
 Click the button below to run the demo in Google Colab.
 
