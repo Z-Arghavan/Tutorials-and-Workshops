@@ -17,9 +17,16 @@ Some tools that we will use are listed below. Participants can install them or c
 
 - **Google Colab** – for running simple scripts and queries  
   https://colab.research.google.com/
-
+https://colab.research.google.com/drive/1gDTatw7STRKlpb2Fkjwk_Fzcdbzk8gxo?usp=sharing
 - **GitHub** – for accessing the ontology repository  
   https://github.com/
 
 - **Miro** – for collaborative concept and ontology sketching  
   https://miro.com
+
+
+
+  **dor ontology**
+  https://z-arghavan.github.io/DORF/
+
+
