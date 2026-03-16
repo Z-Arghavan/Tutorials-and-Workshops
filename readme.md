@@ -15,9 +15,8 @@ Some tools that we will use are listed below. Participants can install them or c
 - **Protégé** – for ontology modelling  
   https://protege.stanford.edu/
 
-- **Google Colab** – for running simple scripts and queries  
-  https://colab.research.google.com/
-https://colab.research.google.com/drive/1gDTatw7STRKlpb2Fkjwk_Fzcdbzk8gxo?usp=sharing
+- **Google Colab** – for running simple scripts and 
+
 - **GitHub** – for accessing the ontology repository  
   https://github.com/
 
@@ -26,7 +25,13 @@ https://colab.research.google.com/drive/1gDTatw7STRKlpb2Fkjwk_Fzcdbzk8gxo?usp=sh
 
 
 
-  **dor ontology**
+  **DOR ontology**
   https://z-arghavan.github.io/DORF/
 
+
+## Run the Demo neuro-symbolic code in Google Colab
+
+Click the button below to run the demo in Google Colab.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1gDTatw7STRKlpb2Fkjwk_Fzcdbzk8gxo?usp=sharing)
 
