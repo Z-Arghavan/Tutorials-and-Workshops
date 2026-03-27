@@ -1,0 +1,125 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{xifthen}
+\usepackage{xcolor}
+
+% --------------------------------------------------
+% Counters
+% --------------------------------------------------
+\newcounter{reviewer}
+\setcounter{reviewer}{0}
+\newcounter{point}[reviewer]
+\setcounter{point}{0}
+
+\renewcommand{\thepoint}{P\,\thereviewer.\arabic{point}}
+
+\newcommand{\reviewersection}{
+\stepcounter{reviewer}
+\bigskip \hrule
+\section*{Reviewer \thereviewer}
+}
+
+% --------------------------------------------------
+% Reviewer comments
+% --------------------------------------------------
+\newenvironment{point}
+{
+\refstepcounter{point}
+\bigskip \noindent
+{\color{red}\textbf{Reviewer Point \thepoint} --- }
+\color{red}
+}
+{\par \color{black}}
+
+\newcommand{\shortpoint}[1]{
+\refstepcounter{point}
+\bigskip \noindent
+{\color{red}\textbf{Reviewer Point \thepoint}} --- {\color{red}#1}
+\par
+}
+
+% --------------------------------------------------
+% Author replies
+% --------------------------------------------------
+\newenvironment{reply}
+{
+\medskip \noindent
+\begin{sf}\textbf{Reply: }
+}
+{
+\medskip \end{sf}
+}
+
+\newcommand{\shortreply}[2][]{
+\medskip \noindent
+\begin{sf}\textbf{Reply: } #2
+\ifthenelse{\equal{#1}{}}{}{ \hfill \footnotesize (#1)}
+\medskip \end{sf}
+}
+
+% --------------------------------------------------
+% Title (EDIT THIS)
+% --------------------------------------------------
+\title{[INSERT PAPER TITLE HERE]}
+
+\begin{document}
+
+\begin{center}
+{\LARGE \textbf{[INSERT PAPER TITLE HERE]}}
+
+\vspace{0.5cm}
+
+{\Large Response to the Reviewers}
+\end{center}
+
+% --------------------------------------------------
+% Opening statement
+% --------------------------------------------------
+We thank the reviewers for their careful reading of our manuscript and for their constructive comments. 
+We have revised the manuscript accordingly and address each comment point by point below.
+
+% ==================================================
+% Reviewer 1
+% ==================================================
+\reviewersection
+
+\begin{point}
+[PASTE REVIEWER COMMENT HERE]
+\end{point}
+
+\begin{reply}
+We thank the reviewer for this comment.
+
+% --- Your response ---
+[EXPLAIN WHAT YOU CHANGED]
+
+% --- Structure for strong replies ---
+% 1. Acknowledge
+% 2. Clarify misunderstanding (if any)
+% 3. Describe changes made
+% 4. Point to manuscript sections/tables/figures
+% 5. (Optional) Justify decisions
+
+\end{reply}
+
+% Example short comment
+\shortpoint{[SHORT COMMENT]}
+\shortreply{[SHORT RESPONSE]}
+
+% ==================================================
+% Reviewer 2
+% ==================================================
+\reviewersection
+
+\begin{point}
+[PASTE COMMENT]
+\end{point}
+
+\begin{reply}
+We thank the reviewer for this valuable suggestion.
+
+[RESPONSE]
+
+\end{reply}
+\end{document}
