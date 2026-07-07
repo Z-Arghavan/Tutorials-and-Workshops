@@ -3,7 +3,7 @@
 
 This is a collection of small guides I put together for my students and workshop participants, mostly to answer questions that come up again and again during supervision or teaching.
 
-Instead of explaining the same thing in every meeting, I try to write it down once here, so you can go through it at your own pace. That said, feel free to still ask me anything — these are just a starting point.
+Instead of explaining the same thing in every meeting, I try to write it down once here, so you can go through it at your own pace. That said, feel free to still ask me anything by opening an issue in GitHub!
 
 ## What's inside
 
