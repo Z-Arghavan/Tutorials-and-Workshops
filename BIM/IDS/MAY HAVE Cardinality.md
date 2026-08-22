@@ -1,29 +1,10 @@
 # Investigating Optional ("MAY HAVE") Cardinality in IDS Requirements — Experimental Documentation
 
-A structured record of validation experiments performed in usBIM.IDSeditor and usBIM.IDS, conducted to answer a student question raised during the IDS module Q&A.
-
-| | |
-|---|---|
-| **Author** | Arghavan Akbarieh |
-| **IDS document tested** | 2026_ProcessModellingSpecification.ids |
-| **IFC model tested** | ILS-woco 3.0_variant A.ifc |
-| **Tools used** | usBIM.IDSeditor 2.4.8.0 (IDS-Audit-tool v1.0.107) · usBIM.IDS (usBIM.browser v4.0.5) |
-| **IDS Schema** | 1.0 · ifcVersion: IFC4X3_ADD2 |
-| **Date** | June 2026 |
+A structured record of validation experiments performed in usBIM.IDSeditor and usBIM.IDS
 
 ---
 
-## 1. Background and Triggering Question
-
-During the IDS module Q&A, a student raised the following question after encountering error 202 ("Invalid cardinality") while building an Optional requirement in usBIM.IDSeditor:
-
-> "Any requirement of 'MAY HAVE \<attribute\> with value \<any\>' (i.e. no specified value) results in error 202: Invalid cardinality. Is it correct that an attribute listed in the Exchange Requirements (ER) as Optional (O) cannot be placed in IDS validation, since omitting the value is technically the same as not having the requirement at all? And does this need to be documented in the report?"
-
-To answer this rigorously rather than from documentation alone, a series of controlled experiments was carried out directly in usBIM.IDSeditor and usBIM.IDS, isolating one variable at a time. This document records each experiment in the order performed, the evidence obtained, and the final, evidence-based conclusions.
-
----
-
-## 2. Method
+## 1. Method
 
 All experiments use the same test specification, "Wall_optionalRequirements", inside 2026_ProcessModellingSpecification.ids, applied to the IfcWall entities of the ILS-woco 3.0_variant A IFC model (45 walls). Across the experiment sequence, three variables were independently manipulated and isolated:
 
@@ -35,7 +16,7 @@ Each experiment changes only one of these variables relative to the previous one
 
 ---
 
-## 3. Experiment 0 — Baseline: the 202 error
+## 2. Experiment 0 — Baseline: the 202 error
 
 The starting observation: building an Optional ("MAY HAVE…") requirement with no value specified produces error 202 ("Invalid cardinality") for the Attribute, Material, and Classification facets.
 
@@ -57,7 +38,7 @@ This is not specific to usBIM: error 202 originates in the IDS-Audit-tool mainta
 
 ---
 
-## 4. Experiment 1 — Optional Property with Data Type only (no Value)
+## 3. Experiment 1 — Optional Property with Data Type only (no Value)
 
 **Question:** does the 202 rule apply identically to every facet, or can a facet pass Optional cardinality without a Value under some condition?
 
@@ -88,7 +69,7 @@ Unlike Attribute or Material, the Property facet has an additional parameter ind
 
 ---
 
-## 5. Experiment 2 — Same configuration, property absent from the model
+## 4. Experiment 2 — Same configuration, property absent from the model
 
 To test the other branch of Optional logic (absence, not just presence), the same pattern was applied to a property that does not exist on any wall in this model.
 
@@ -114,7 +95,7 @@ Together, Experiments 1 and 2 confirm both halves of Optional cardinality functi
 
 ---
 
-## 6. Experiment 3 — Optional Attribute with an arbitrary Value ("N/A")
+## 5. Experiment 3 — Optional Attribute with an arbitrary Value ("N/A")
 
 Returning to the Attribute facet that triggered the original 202 error: does simply adding any value resolve it, and if so, does the placeholder "N/A" behave any differently from a real value?
 
@@ -140,7 +121,7 @@ This result raises the central question for the rest of the investigation: does 
 
 ---
 
-## 7. Experiment 4 — Optional Attribute with an exact-match Value
+## 6. Experiment 4 — Optional Attribute with an exact-match Value
 
 To remove the ambiguity in Experiment 3, the Value was changed to the exact, real Name of one specific wall in the model (Basic Wall:NLRS_28_WA_beton-300mm_gen:21964056), so that exactly one of the 45 walls could genuinely match, and 44 could not.
 
@@ -163,7 +144,7 @@ If the Value were being enforced as a match condition, 44 of the 45 walls should
 
 ---
 
-## 8. Experiment 5 — Control: the identical Value under Mandatory cardinality
+## 7. Experiment 5 — Control: the identical Value under Mandatory cardinality
 
 To confirm Experiment 4's result is a genuine cardinality effect — and not a tool malfunction, or coincidental to this particular value — the identical exact-match Value was re-tested with the Requirement cardinality switched from MAY HAVE to MUST HAVE, holding Applicability and the Value string constant.
 
@@ -198,7 +179,7 @@ This is the decisive control. With the identical Value string, Mandatory cardina
 
 ---
 
-## 9. Experiment 6 — Isolating Applicability cardinality as a confound
+## 8. Experiment 6 — Isolating Applicability cardinality as a confound
 
 Experiment 5 changed two variables relative to Experiment 4 at once: Requirement cardinality (MAY HAVE → MUST HAVE) and Applicability cardinality (MUST contain → MAY contain). To confirm Applicability cardinality was not the actual cause of the 45/45 result, one final test held Applicability at "MAY contain" while restoring the Requirement cardinality to MAY HAVE, using the same exact-match Value.
 
@@ -281,29 +262,9 @@ A well-formed Optional ER item should always specify, for every item marked (O),
 
 ---
 
-## 12. Reply Provided to the Student
-
-The following response was prepared based on the findings above:
-
-> **1.** The 202 error happens for Attributes (and Materials) if there is no value provided when the constraint is MAY HAVE in Requirements. This error does not easily happen on Property or Classification because the tool and user interface urge you to add further details.
->
-> **2.** MUST HAVE checks the existence of an attribute: it is either present or absent, and that alone is already a complete, checkable rule. MAY HAVE cannot work the same way, because presence or absence is already allowed either way by definition. So MAY HAVE needs a value to be a valid rule — otherwise any entity may have any attribute, and the rule provides no value.
->
-> **3.** Based on direct testing, any value satisfies this requirement, as long as something is there. The exact name of one specific wall was set as the value and applied across 45 walls; all 45 passed, including the 44 with a completely different name. The found value is reported to the user, but a mismatch is not flagged as a failure. This is the opposite of MUST HAVE, where present-but-wrong-value is correctly flagged as a failure when the same value was tested.
->
-> **4.** So, adding "N/A" as a value for the MAY HAVE attribute resolves the error, and any other value, even a precise one such as the wall's real name, makes no difference to the validation result.
->
-> **5.** To answer the second question: an attribute in the ER marked (O) can still be expressed as an IDS requirement using a value such as "N/A", or, better, the ER can be updated to specify what the value should be if the attribute is present.
->
-> **6.** This question and the exploration it prompted should be written up as part of the report, as exactly the kind of investigation and interpretation of validation behaviour the module is intended to encourage.
-
----
-
-## 13. Evidence Sources
+## 12. Resources
 
 - usBIM.IDSeditor (Audit Tool v1.0.107) — document validity, error 202 grid, facet configuration screenshots
 - usBIM.IDS / usBIM.browser v4.0.5 — live per-specification and per-element validation results
-- "Reports of 2026_ProcessModellingSpecification.ids" (PDF), multiple versions — aggregate issue counts and codes per specification
 - ILS-woco 3.0_variant A — issues.xlsx export — element-level (IfcGlobalId) validation detail
-- 2026_ProcessModellingSpecification.ids (raw XML), multiple versions — ground-truth cardinality and parameter values for each test
 - IDS for Everyone (ACCA software S.p.A., 2024) — manual definitions of Applicability and Requirement cardinality, Chapters 4–6
